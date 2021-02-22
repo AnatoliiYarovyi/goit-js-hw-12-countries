@@ -1,0 +1,32 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  align-items: center;
+}
+.country {
+}
+.title {
+}
+.desk {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+.aside {
+  padding: 20px;
+}
+.content {
+}
+.text {
+}
+.imgFlag {
+  width: 200px;
+}
