@@ -4,13 +4,8 @@ import updateMarkup from './update-countryes.js'
 import error from './notification.js'
 let debounce = require('lodash.debounce');
 
-refs.cleanerRef.addEventListener('click', () => {
-    refs.countryContainer.innerHTML = ''
-})
-
 refs.searchInput.addEventListener('input', debounce(event => {
     let inputValue = event.target.value;
-    console.log(inputValue)
     fetch(`https://restcountries.eu/rest/v2/name/${inputValue}`)
         .then(res => res.json())
         .then(matCount => filterCountr(matCount))
@@ -19,14 +14,23 @@ refs.searchInput.addEventListener('input', debounce(event => {
 
 function filterCountr(matCount) {
     const numberCountries = matCount.length
-            if (numberCountries > 10) {
-                error({
-                    title: 'Oh No!',                    
-                    text: 'Необходимо сделать запрос более специфичным.'  
-                });                                
-            } else if (numberCountries >= 2 && numberCountries <= 10) {
-                updateListMarkup(matCount)
-            } else {
-                updateMarkup(matCount)
-            }
+    if (numberCountries > 10) {
+        onCleaner()        
+        error({                    
+            title: 'Oh No!',            
+            text: 'Необходимо сделать запрос более специфичным.'                    
+        });       
+    } else if (numberCountries >= 2 && numberCountries <= 10) {        
+        onCleaner()        
+        updateListMarkup(matCount)        
+    } else {        
+        onCleaner()        
+        updateMarkup(matCount)         
+    }
+    
+}
+
+function onCleaner() {
+    refs.countryContainer.innerHTML = ''
+    refs.searchInput.value = ''
 }
